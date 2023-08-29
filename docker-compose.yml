@@ -1,0 +1,20 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:alpine
+    networks:
+      - secure_network
+    environment:
+      POSTGRES_DB: exampledb
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:${DB_DATA_PATH}
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: ["postgres"]
+
+networks:
+  secure_network:
+
+volumes:
+  postgres_data:
